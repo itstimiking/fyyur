@@ -59,6 +59,7 @@
 		</div>
 		{% endfor %}
 	</div>
+	
 </section>
 <section>
 	<h2 class="monospace">{{ venue.past_shows_count }} Past {% if venue.past_shows_count == 1 %}Show{% else %}Shows{% endif %}</h2>
@@ -75,7 +76,20 @@
 	</div>
 </section>
 
-<a href="/venues/{{ venue.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a>
-
+<a href="/venues/{{ venue.id }}/edit"><button class="btn btn-primary btn-lg">Edit</button></a><br>
+<button class="btn btn-danger btn-lg" id='delete' data-venueId='{{venue.id}}'>Delete</button>
+<script>
+	const btnDelete = document.getElementById('delete')
+	btnDelete.addEventListener('click',e=>{
+		fetch(`/venues/${e.target.dataset.venueid}`,{
+			method:"DELETE",
+			headers:{
+				'Content-Type':'application/json'
+			}
+		}).then(res=>{
+			window.location = "/venues"
+		})
+	})
+</script>
 {% endblock %}
 
